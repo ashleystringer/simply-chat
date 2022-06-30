@@ -1,0 +1,3 @@
+/*
+Create middleware that checks bearer token to determine if access to route is allowed
+*/
