@@ -5,6 +5,17 @@ const dotenv = require('dotenv');
 const path = require('path');
 const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
+const http = require('http');
+const { Server } = require('socket.io');
+
+const server = http.createServer(app);
+
+const io = new Server(server);
+
+io.on('connection', socket => {
+    console.log('On connection');
+    socket.emit('test', 'hello');
+});
 
 // Load env vars
 dotenv.config({path: './config/config.env'});
@@ -28,6 +39,6 @@ app.use('/auth', auth);
 
 app.use(errorHandler);
 
-app.listen(5000, ()=>{
+server.listen(5000, ()=>{
     console.log('Listening on Port 5000');
 });

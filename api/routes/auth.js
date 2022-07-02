@@ -1,8 +1,9 @@
 const express = require('express');
-const asyncHandler = require('./async');
+const asyncHandler = require('../middleware/async');
 const router = express.Router();
 const User = require('../models/User');
 const ErrorResponse = require('../utilities/errorResponse');
+const { protect } = require('../middleware/auth');
 const { v4: uuidv4 } = require('uuid');
 
 router.post('/login', asyncHandler(async (req, res, next) => {
@@ -46,5 +47,24 @@ router.post('/register', asyncHandler(async (req, res) => {
     await User.create({username, password, email, user_id});
     res.status(200).json({msg: 'Successful'});
 }));
+
+router.get('/user', asyncHandler(async (req, res) =>{
+
+}));
+
+function sendUserToken(user, statusCode){
+    const token = user.getSignedToken();
+
+    const options = {
+        httpOnly: true,
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000)
+    };
+
+    res.status(statusCode)
+    .cookie('token', token, options)
+    .json({
+        success: true
+    });
+}
 
 module.exports = router;
