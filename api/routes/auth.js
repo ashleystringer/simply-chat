@@ -30,9 +30,11 @@ router.post('/login', asyncHandler(async (req, res, next) => {
 
     console.log(user);
 
-    res.status(200)
+    sendUserToken(user, 200, res);
+
+    /*res.status(200)
     .cookie('test', 'test1', {expires: new Date(Date.now() + 8 * 3600000)})
-    .json({msg: 'Successful'});
+    .json({msg: 'Successful'});*/
 }));
 
 router.post('/register', asyncHandler(async (req, res) => {
@@ -52,8 +54,8 @@ router.get('/user', asyncHandler(async (req, res) =>{
 
 }));
 
-function sendUserToken(user, statusCode){
-    const token = user.getSignedToken();
+function sendUserToken(user, statusCode, res){
+    const token = user.getSignedJwtToken();
 
     const options = {
         httpOnly: true,
