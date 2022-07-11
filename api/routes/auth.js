@@ -32,9 +32,6 @@ router.post('/login', asyncHandler(async (req, res, next) => {
 
     sendUserToken(user, 200, res);
 
-    /*res.status(200)
-    .cookie('test', 'test1', {expires: new Date(Date.now() + 8 * 3600000)})
-    .json({msg: 'Successful'});*/
 }));
 
 router.post('/register', asyncHandler(async (req, res) => {
@@ -65,7 +62,8 @@ function sendUserToken(user, statusCode, res){
     res.status(statusCode)
     .cookie('token', token, options)
     .json({
-        success: true
+        success: true,
+        token
     });
 }
 

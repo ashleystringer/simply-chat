@@ -3,7 +3,7 @@ import { Form, Container, Button } from 'react-bootstrap';
 import Error from './Error';
 import axios from 'axios';
 
-export default function Login(){
+export default function Login({token}){
 
     const [error, setError] = useState();
     const usernameRef = useRef();
@@ -26,6 +26,7 @@ export default function Login(){
         axios.post(`http://localhost:5000/auth/login`, data,  { withCredentials: true })
             .then(data => {
                 console.log(data);
+                token(data.data.token);
             })
             .catch(err => {
                 console.log(err);

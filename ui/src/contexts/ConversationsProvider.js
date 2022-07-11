@@ -22,6 +22,12 @@ export function ConversationsProvider({children}){
         return () => socket.off('test');
     }, [socket]);
 
+    function addMessage(){
+        
+    }
+
+    
+
     return(
         <ConversationsContext.Provider value={conversations}>
             {children}
