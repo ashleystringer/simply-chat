@@ -1,6 +1,7 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useRef } from 'react';
 import { useContacts } from '../contexts/ContactsProvider';
+import axios from 'axios';
 
 export default function ContactModal(){
 
@@ -11,13 +12,27 @@ export default function ContactModal(){
     function handleSubmit(e){
         e.preventDefault();
 
+        const contact = contactIdRef.current.value;
+
         console.log(`contactIdRef: ${contactIdRef.current.value}`);
         //closeModal();
+
+        const data = {
+            contact
+        };
+
+        axios.post(`http://localhost:5000/auth/user`, data,  { withCredentials: true })
+            .then(data => {
+                console.log('then');
+            })
+            .catch(err => {
+                console.log(`error: ${err}`);
+        })
     }
 
     const modal = (
         <>
-            <Modal.Header>Contact</Modal.Header>
+            <Modal.Header>Add Contact</Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>

@@ -51,6 +51,14 @@ router.get('/user', asyncHandler(async (req, res) =>{
 
 }));
 
+router.post('/user', asyncHandler(async (req, res) =>{
+    console.log('user');
+    console.log(req.body);
+    /*
+    const user = await User.findOne({username}).select('+password');
+    */
+}));
+
 function sendUserToken(user, statusCode, res){
     const token = user.getSignedJwtToken();
 
@@ -64,6 +72,7 @@ function sendUserToken(user, statusCode, res){
     .json({
         success: true,
         token
+        //What else should I send back?
     });
 }
 
