@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function ContactModal(){
 
-    //const contacts = useContacts();
+    const { createContact } = useContacts();
 
     const contactIdRef = useRef();
 
@@ -24,6 +24,7 @@ export default function ContactModal(){
         axios.post(`http://localhost:5000/auth/user`, data,  { withCredentials: true })
             .then(data => {
                 console.log('then');
+                console.log(data);
             })
             .catch(err => {
                 console.log(`error: ${err}`);

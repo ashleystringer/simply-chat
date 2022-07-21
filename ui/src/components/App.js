@@ -1,12 +1,14 @@
 import { CookiesProvider } from 'react-cookie';
+import { ContactsProvider } from '../contexts/ContactsProvider';
 import ChatApp from './ChatApp';
+import '../styles/styles.css';
 
 function App() {
   return (
     <div className="App">
-      <CookiesProvider>
+      <ContactsProvider>
         <ChatApp/>
-      </CookiesProvider>
+      </ContactsProvider>
     </div>
   );
 }

@@ -18,6 +18,8 @@ router.post('/login', asyncHandler(async (req, res, next) => {
 
     const user = await User.findOne({username}).select('+password');
 
+    console.log(user);
+
     if(!user){
         return next(new ErrorResponse('Invalid credentials', 401));
     }
@@ -51,12 +53,32 @@ router.get('/user', asyncHandler(async (req, res) =>{
 
 }));
 
-router.post('/user', asyncHandler(async (req, res) =>{
+router.post('/user', asyncHandler(async (req, res, next) =>{
     console.log('user');
+    console.log(req.headers);
     console.log(req.body);
-    /*
-    const user = await User.findOne({username}).select('+password');
-    */
+    
+    const { contact } = req.body;
+
+    if(!contact){
+        return next(new ErrorResponse('Please provide a user name', 400));
+    }
+
+    const user = await User.findOne({username: contact}); //username: contact
+    if(!user){
+        return next(new ErrorResponse('Please provide a username', 400));
+    }
+    
+    console.log(`user.username: ${user.username}`);
+    console.log(`user.user_id: ${user.user_id}`);
+
+    return res.status(200)
+    .json({
+        success: true,
+        username: user.username,
+        user_id: user.user_id
+    });
+
 }));
 
 function sendUserToken(user, statusCode, res){
