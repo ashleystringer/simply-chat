@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
     user_id:{
         type: String,
         required: true
+    },
+    userdata_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserData"
     }
 });
 
