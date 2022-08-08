@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useConversations } from '../contexts/ConversationsProvider';
 import ContactModal from './ContactModal';
 import ConversationModal from './ConversationModal';
+import ChatMenu from './ChatMenu';
 //import useLocalStorage from './useLocalStorage';
-import {} from 'react-bootstrap';
+import { Tab, Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 
@@ -16,7 +17,10 @@ export default function Chat(){
     const sentRequests = useLocalStorage('sentRequests', []);
     */
 
+   const [menuState, setMenuState] = useState();
+
     const usernameRef = useRef();
+    const { test1 } = useConversations();
 
     function handleSubmit(e){
         /*
@@ -38,6 +42,9 @@ export default function Chat(){
         .catch(err => {
             console.log(err);
         });
+
+        test1(data)
+
         e.preventDefault();
     }
 
@@ -49,13 +56,18 @@ export default function Chat(){
         <div></div>
     );
 
+    function handleClick(e){
+        console.log('handleClick');
+    }
+
+
     return(
         <>
             <div class='chat-container'>
                 <div class='chat-header'>Chat header</div>
                 <main class='chat-main'>
                     <div class='chat-menu'>
-                        Chat Menu
+                        <ChatMenu setMenuState={setMenuState}/>
                     </div>
                     <div class='chat-board'>
                         Chat Board
@@ -68,7 +80,6 @@ export default function Chat(){
                     </form>
                 </div>
             </div>
-
         </>
     );
 }

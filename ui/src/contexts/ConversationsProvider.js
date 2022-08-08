@@ -26,10 +26,21 @@ export function ConversationsProvider({children}){
         
     }
 
+    function test1(test){
     
+        console.log(test);
+        const data = {};
+        socket.emit('test1', {test});
+        
+    }
+
+    const value = {
+        conversations,
+        test1
+    };
 
     return(
-        <ConversationsContext.Provider value={conversations}>
+        <ConversationsContext.Provider value={value}>
             {children}
         </ConversationsContext.Provider>
     );

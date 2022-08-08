@@ -9,6 +9,11 @@ const connectDB = require('./config/db');
 const http = require('http');
 const { Server } = require('socket.io');
 
+//UserData model
+const UserData = require('./models/UserData');
+//User model
+const User = require('./models/User');
+
 const server = http.createServer(app);
 
 // Load env vars
@@ -43,7 +48,26 @@ const io = new Server(server, {
 io.on('connection', socket => {
     console.log('On connection');
     socket.emit('test', 'hello');
+    
+    socket.on('test1', async ({test}) => {
+        console.log('Test1 in socket');    
+        console.log(test);
+        //const t = await User.findOne({test});
+        //UserData
+    });
+    
 });
+
+
+/*
+// This is a test
+
+app.get('/test', (req, res, next)=>{
+    
+});
+
+*/
+
 
 
 const auth = require('./routes/auth');
@@ -54,4 +78,10 @@ app.use(errorHandler);
 
 server.listen(5000, ()=>{
     console.log('Listening on Port 5000');
+
+    /*
+
+    */
+
+
 });
